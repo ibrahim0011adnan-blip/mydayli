@@ -4,7 +4,263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ڕێکخستنی ئەرکەکان</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .galaxy-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .galaxy-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+        }
+        
+        .rotating-star {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: rotateStar 20s linear infinite;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.3);
+        }
+        
+        .star-tail {
+            position: absolute;
+            width: 300px;
+            height: 10px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+            top: 50%;
+            left: 50%;
+            transform-origin: left center;
+            animation: rotateTail 20s linear infinite;
+        }
+        
+        @keyframes rotateStar {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        
+        @keyframes rotateTail {
+            0% {
+                transform: translate(0, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(0, -50%) rotate(360deg);
+            }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-bottom: 1px solid #3a3a5a;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #8a2be2, #00bfff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .task-form {
+            background: rgba(25, 25, 45, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #a0a0c0;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(40, 40, 60, 0.8);
+            border: 1px solid #4a4a6a;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: linear-gradient(90deg, #8a2be2, #00bfff);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+        
+        .task-list {
+            background: rgba(25, 25, 45, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .task-item {
+            background: rgba(40, 40, 60, 0.6);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #8a2be2;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .task-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .task-item.completed {
+            opacity: 0.7;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .task-item.completed h3 {
+            text-decoration: line-through;
+            color: #a0a0c0;
+        }
+        
+        .task-item h3 {
+            color: #d0d0f0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-item p {
+            color: #b0b0d0;
+            margin-bottom: 1rem;
+        }
+        
+        .task-priority {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .priority-high {
+            background-color: #FF4500;
+            color: white;
+        }
+        
+        .priority-medium {
+            background-color: #FFA500;
+            color: black;
+        }
+        
+        .priority-low {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .task-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .task-actions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .complete-btn {
+            background: linear-gradient(90deg, #4CAF50, #2E8B57);
+        }
+        
+        .delete-btn {
+            background: linear-gradient(90deg, #FF4500, #FF6347);
+        }
+        
+        .task-counter {
+            text-align: center;
+            margin-top: 1rem;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .task-form, .task-list {
+                padding: 1.5rem;
+            }
+            
+            .rotating-star {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .star-tail {
+                width: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="galaxy-container">
@@ -49,13 +305,114 @@
             <h2>ئەرکەکانت <span id="taskCount">(0 ئەرک)</span></h2>
             
             <div id="tasksContainer">
-                <!-- ئەرکەکان لێرە زیاد دەکرێن -->
+                <!-- ئەرکەکان ڕاستەوخۆ لێرە زیاد دەکرێن -->
             </div>
             
             <div class="task-counter" id="completedCounter">0 لە 0 ئەرک تەواو بوون</div>
         </section>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskForm = document.getElementById('taskForm');
+            const tasksContainer = document.getElementById('tasksContainer');
+            const taskCount = document.getElementById('taskCount');
+            const completedCounter = document.getElementById('completedCounter');
+            
+            let tasks = [];
+            
+            // زیادکردنی ئەرکی نوێ
+            taskForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const title = document.getElementById('taskTitle').value;
+                const description = document.getElementById('taskDescription').value;
+                const priority = document.getElementById('taskPriority').value;
+                
+                if (title.trim() === '') return;
+                
+                const newTask = {
+                    id: Date.now(),
+                    title,
+                    description,
+                    priority,
+                    completed: false
+                };
+                
+                tasks.push(newTask);
+                renderTasks();
+                
+                // پاککردنەوەی فۆرم
+                taskForm.reset();
+            });
+            
+            // نیشاندانی ئەرکەکان
+            function renderTasks() {
+                tasksContainer.innerHTML = '';
+                
+                tasks.forEach(task => {
+                    const taskElement = document.createElement('div');
+                    taskElement.className = `task-item ${task.completed ? 'completed' : ''}`;
+                    taskElement.dataset.id = task.id;
+                    
+                    let priorityClass = '';
+                    let priorityText = '';
+                    
+                    if (task.priority === 'high') {
+                        priorityClass = 'priority-high';
+                        priorityText = 'بەرز';
+                    } else if (task.priority === 'medium') {
+                        priorityClass = 'priority-medium';
+                        priorityText = 'مامناوەند';
+                    } else {
+                        priorityClass = 'priority-low';
+                        priorityText = 'نزم';
+                    }
+                    
+                    taskElement.innerHTML = `
+                        <div class="task-priority ${priorityClass}">${priorityText}</div>
+                        <h3>${task.title}</h3>
+                        <p>${task.description}</p>
+                        <div class="task-actions">
+                            <button class="complete-btn">${task.completed ? 'نەتەواو' : 'تەواو بوو'}</button>
+                            <button class="delete-btn">سڕینەوە</button>
+                        </div>
+                    `;
+                    
+                    tasksContainer.appendChild(taskElement);
+                });
+                
+                updateCounters();
+            }
+            
+            // کارلێکەکان لەگەڵ ئەرکەکان (سڕینەوە / تەواوکردن)
+            tasksContainer.addEventListener('click', function(e) {
+                const taskElement = e.target.closest('.task-item');
+                if (!taskElement) return;
+                
+                const taskId = parseInt(taskElement.dataset.id);
+                const taskIndex = tasks.findIndex(task => task.id === taskId);
+                
+                if (e.target.classList.contains('delete-btn')) {
+                    // سڕینەوەی ئەرک
+                    tasks.splice(taskIndex, 1);
+                    renderTasks();
+                } else if (e.target.classList.contains('complete-btn')) {
+                    // تەواوکردنی ئەرک
+                    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+                    renderTasks();
+                }
+            });
+            
+            // نوێکردنەوەی ژمارەکانی ئەرکەکان
+            function updateCounters() {
+                const totalTasks = tasks.length;
+                const completedTasks = tasks.filter(task => task.completed).length;
+                
+                taskCount.textContent = `(${totalTasks} ئەرک)`;
+                completedCounter.textContent = `${completedTasks} لە ${totalTasks} ئەرک تەواو بوون`;
+            }
+        });
+    </script>
 </body>
 </html>
