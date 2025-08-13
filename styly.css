@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f0f1a;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.galaxy-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.galaxy-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+}
+
+.rotating-star {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #fff 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(1px);
+    animation: rotateStar 20s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.3);
+}
+
+.star-tail {
+    position: absolute;
+    width: 300px;
+    height: 10px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    top: 50%;
+    left: 50%;
+    transform-origin: left center;
+    animation: rotateTail 20s linear infinite;
+}
+
+@keyframes rotateStar {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotateTail {
+    0% { transform: translate(0, -50%) rotate(0deg); }
+    100% { transform: translate(0, -50%) rotate(360deg); }
+}
+
+/* ... بەشی CSS پێشوو ... */
+
+.task-counter {
+    text-align: center;
+    margin-top: 1rem;
+    color: #a0a0c0;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .task-form, .task-list { padding: 1.5rem; }
+    .rotating-star { width: 100px; height: 100px; }
+    .star-tail { width: 200px; }
+}

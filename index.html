@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ڕێکخستنی ئەرکەکان</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="galaxy-container">
+        <div class="galaxy-bg"></div>
+        <div class="rotating-star"></div>
+        <div class="star-tail"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>ڕێکخستنی ئەرکە ڕۆژانەکان</h1>
+            <p>ئەرکەکانت ڕێک بخە و بە باشی بەڕێوەیان بەرە</p>
+        </header>
+        
+        <section class="task-form">
+            <h2>ئەرکێکی نوێ زیاد بکە</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskTitle">ناوی ئەرک</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="taskDescription">پێناسەی ئەرک</label>
+                    <textarea id="taskDescription" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="taskPriority">پێشەنگی</label>
+                    <select id="taskPriority">
+                        <option value="low">نزم</option>
+                        <option value="medium">مامناوەند</option>
+                        <option value="high">بەرز</option>
+                    </select>
+                </div>
+                
+                <button type="submit">زیادکردنی ئەرک</button>
+            </form>
+        </section>
+        
+        <section class="task-list">
+            <h2>ئەرکەکانت <span id="taskCount">(0 ئەرک)</span></h2>
+            
+            <div id="tasksContainer">
+                <!-- ئەرکەکان لێرە زیاد دەکرێن -->
+            </div>
+            
+            <div class="task-counter" id="completedCounter">0 لە 0 ئەرک تەواو بوون</div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
